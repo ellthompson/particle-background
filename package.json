@@ -1,0 +1,17 @@
+{
+  "name": "particle-background",
+  "version": "1.0.0",
+  "description": "React based particle system background",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "^12.0.1",
+    "react": "^0.14.3",
+    "reactify": "^1.1.1"
+  }
+}
