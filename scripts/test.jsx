@@ -5,6 +5,7 @@ var Test = React.createClass({
     getInitialState: function() {
         return {
             opacity: Math.random(),
+            opacity_increase: (Math.random() - 0.5) < 1 ? true : false,
             scale: Math.random() * 5,
             pos_x: Math.random() * 400,
             pos_y: Math.random() * 400,
@@ -16,6 +17,17 @@ var Test = React.createClass({
         this.props.register(this);
     },
     notify: function() {
+        this.update_opacity();
+        this.update_position();
+    },
+    update_opacity: function() {
+        this.setState({opacity: this.state.opacity_increase ? this.state.opacity + 0.002 : this.state.opacity - 0.002});
+        if (this.state.opacity < 0)
+            this.setState({opacity_increase: true});
+        if (this.state.opacity > 1)
+                    this.setState({opacity_increase: false});
+    },
+    update_position: function() {
         var new_pos_x = this.state.pos_x + this.state.vel_x;
         var new_pos_y = this.state.pos_y + this.state.vel_y;
         if (!this.validate_position(new_pos_x, new_pos_y)) {
