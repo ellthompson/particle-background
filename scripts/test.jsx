@@ -5,10 +5,10 @@ var Test = React.createClass({
     getInitialState: function() {
         return {
             opacity: Math.random(),
-            opacity_increase: (Math.random() - 0.5) < 1 ? true : false,
-            scale: Math.random() * 5,
-            pos_x: Math.random() * 400,
-            pos_y: Math.random() * 400,
+            opacity_increase: (Math.random() + 0.5) < 1 ? true : false,
+            size: Math.random() * 3 + 2,
+            pos_x: Math.random() * this.props.width,
+            pos_y: Math.random() * this.props.height,
             vel_x: (Math.random() - 0.5) * 0.2,
             vel_y: (Math.random() - 0.5) * 0.2
         };
@@ -40,21 +40,28 @@ var Test = React.createClass({
         }
     },
     validate_position: function(pos_x, pos_y) {
-        if (pos_y < -40 || pos_y > 440 ||pos_x < -40 || pos_x > 440)
+        if (pos_x < -40)
+            return false;
+        else if (pos_x > this.props.width)
+            return false;
+        else if (pos_y < -40)
+            return false;
+        else if (pos_y > this.props.height)
             return false;
         return true;
     },
     reset_physics: function() {
         this.setState({
-            pos_x: Math.random() * 400,
-            pos_y: Math.random() * 400,
+            pos_x: Math.random() * this.props.width,
+            pos_y: Math.random() * this.props.height,
             vel_x: (Math.random() - 0.5) * 0.2,
-            vel_y: (Math.random() - 0.5) * 0.2
+            vel_y: (Math.random() - 0.5) * 0.2,
+            opacity: 0
         });
     },
     render: function() {
         return (
-            <div style={{width: '10px', height: '10px', background:'blue', 'border-radius': '50px', opacity: this.state.opacity, position: 'absolute', transform: 'translate('+this.state.pos_x+'px, '+this.state.pos_y+'px) scale('+this.state.scale+')'}}></div>
+            <div style={{'-webkit-filter': 'blur(1px)', height: 10 * this.state.size + 'px', width: 10 * this.state.size + 'px', 'background-color':'#76DDE8', 'border-radius': '50px', opacity: this.state.opacity, position: 'absolute', transform: 'translate('+this.state.pos_x+'px, '+this.state.pos_y+'px)'}}></div>
         );
     }
 });
@@ -62,7 +69,7 @@ var Test = React.createClass({
 var testContainer = React.createClass({
     getInitialState: function(){
         return {
-            particles: [1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            particles: [1,1,1,1,1,1,1,1,1],
             observers: []
         };
     },
@@ -86,7 +93,7 @@ var testContainer = React.createClass({
             <div>
                 {
                     this.state.particles.map(function(item, index) {
-                        return <Test register={that.register_observer} id={index}/>;
+                        return <Test width='600' height='600' register={that.register_observer} id={index}/>;
                     })
                 }
             </div>
