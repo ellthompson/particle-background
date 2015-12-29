@@ -92,7 +92,7 @@ var testContainer = React.createClass({
         var width = window.innerWidth;
         var height = window.innerHeight;
         return (
-            <div>
+            <div style={{background: '-webkit-linear-gradient(left, hsla(0, 100%, 40%, 1),hsla(0, 100%, 80%, 1))', width: '100%', height: '100%', position: 'absolute', 'z-index': '-9999'}}>
                 {
                     this.state.particles.map(function(item, index) {
                         return <Test width={width} height={height} register={that.register_observer} id={index}/>;
