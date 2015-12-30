@@ -18,28 +18,35 @@ opacity: Math.random() / 5,
     },
     notify: function() {
         if(this.isMounted()) {
-            this.update_opacity();
-            this.update_position();
+            var updated_state = {};
+            this.update_opacity(updated_state);
+            this.update_position(updated_state);
+            this.setState(updated_state);
         }
     },
-    update_opacity: function() {
-        this.setState({opacity: this.state.opacity_increase ? this.state.opacity + 0.0005 : this.state.opacity - 0.0005});
-        if (this.state.opacity < 0)
-            this.setState({opacity_increase: true});
-        if (this.state.opacity > 0.2)
-                    this.setState({opacity_increase: false});
+    update_opacity: function(updated_state) {
+        updated_state.opacity = this.state.opacity_increase ? this.state.opacity + 0.0005 : this.state.opacity - 0.0005;
+        if (updated_state.opacity < 0)
+            updated_state.opacity_increase = true;
+        if (updated_state.opacity > 0.2)
+            updated_state.opacity_increase = false;
     },
-    update_position: function() {
+    update_position: function(updated_state) {
         var new_pos_x = this.state.pos_x + this.state.vel_x;
         var new_pos_y = this.state.pos_y + this.state.vel_y;
         if (!this.validate_position(new_pos_x, new_pos_y)) {
-            this.reset_physics();
+            this.reset_physics(updated_state);
         } else {
-            this.setState({
-                pos_x: new_pos_x,
-                pos_y: new_pos_y,
-            });
+            updated_state.pos_x = new_pos_x;
+            updated_state.pos_y = new_pos_y;
         }
+    },
+    reset_physics: function(updated_state) {
+        updated_state.pos_x = Math.random() * this.state.width;
+        updated_state.pos_y = Math.random() * this.state.height;
+        updated_state.vel_x = (Math.random() - 0.5) * 0.2;
+        updated_state.vel_y = (Math.random() - 0.5) * 0.2;
+        updated_state.opacity = 0;
     },
     validate_position: function(pos_x, pos_y) {
         if (pos_x < -40)
@@ -58,15 +65,6 @@ opacity: Math.random() / 5,
             'height': height,
             pos_x: Math.random() * width,
             pos_y: Math.random() * height,
-        });
-    },
-    reset_physics: function() {
-        this.setState({
-            pos_x: Math.random() * this.state.width,
-            pos_y: Math.random() * this.state.height,
-            vel_x: (Math.random() - 0.5) * 0.2,
-            vel_y: (Math.random() - 0.5) * 0.2,
-            opacity: 0
         });
     },
     render: function() {
