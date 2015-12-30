@@ -7,18 +7,20 @@ var Test = React.createClass({
 opacity: Math.random() / 5,
             opacity_increase: (Math.random() + 0.5) < 1 ? true : false,
             size: Math.random() * 3 + 2,
-            pos_x: Math.random() * this.props.width,
-            pos_y: Math.random() * this.props.height,
-            vel_x: (Math.random() - 0.5) * 0.1,
-            vel_y: (Math.random() - 0.5) * 0.1
+            pos_x: 0,
+            pos_y: 0,
+            vel_x: (Math.random() - 0.5) * 0.6,
+            vel_y: (Math.random() - 0.5) * 0.6
         };
     },
     componentDidMount: function() {
         this.props.register(this);
     },
     notify: function() {
-        this.update_opacity();
-        this.update_position();
+        if(this.isMounted()) {
+            this.update_opacity();
+            this.update_position();
+        }
     },
     update_opacity: function() {
         this.setState({opacity: this.state.opacity_increase ? this.state.opacity + 0.0005 : this.state.opacity - 0.0005});
@@ -42,18 +44,26 @@ opacity: Math.random() / 5,
     validate_position: function(pos_x, pos_y) {
         if (pos_x < -40)
             return false;
-        else if (pos_x > this.props.width)
+        else if (pos_x > this.state.width)
             return false;
         else if (pos_y < -40)
             return false;
-        else if (pos_y > this.props.height)
+        else if (pos_y > this.state.height)
             return false;
         return true;
     },
+    set_particle_area: function(width, height) {
+        this.setState({
+            'width': width,
+            'height': height,
+            pos_x: Math.random() * width,
+            pos_y: Math.random() * height,
+        });
+    },
     reset_physics: function() {
         this.setState({
-            pos_x: Math.random() * this.props.width,
-            pos_y: Math.random() * this.props.height,
+            pos_x: Math.random() * this.state.width,
+            pos_y: Math.random() * this.state.height,
             vel_x: (Math.random() - 0.5) * 0.2,
             vel_y: (Math.random() - 0.5) * 0.2,
             opacity: 0
@@ -69,11 +79,18 @@ opacity: Math.random() / 5,
 var testContainer = React.createClass({
     getInitialState: function(){
         return {
-            particles: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
             observers: []
         };
     },
-    particleEngine: function() {
+    componentDidMount: function() {
+        var width = ReactDOM.findDOMNode(this).offsetWidth;
+        var height = ReactDOM.findDOMNode(this).offsetHeight;
+        this.particleEngine(width, height);
+    },
+    particleEngine: function(width, height) {
+        for(var i = 0; i < this.state.observers.length; i++) {
+            this.state.observers[i].set_particle_area(width, height);
+        }
         var that = this;
         setInterval(function(){
             for(var i = 0; i < that.state.observers.length; i++) {
@@ -87,17 +104,13 @@ var testContainer = React.createClass({
         this.setState({observers: old_observers});
     },
     render: function() {
-        this.particleEngine();
-        var that = this;
-        var width = window.innerWidth;
-        var height = window.innerHeight;
+        var particle_children = [];
+        for(var i = 0; i < 600; i++) {
+            particle_children.push(<Test register={this.register_observer} />);
+        }
         return (
             <div style={{background: '-webkit-linear-gradient(left, hsla(0, 100%, 40%, 1),hsla(0, 100%, 80%, 1))', width: '100%', height: '100%', position: 'absolute', 'z-index': '-9999'}}>
-                {
-                    this.state.particles.map(function(item, index) {
-                        return <Test width={width} height={height} register={that.register_observer} id={index}/>;
-                    })
-                }
+                {particle_children}
             </div>
         );
     }
