@@ -2,8 +2,8 @@ module.exports = function() {
 
     var cursorX = 0;
     var cursorY = 0;
-    var last_cursorX = 0;
-    var last_cursorY = 0;
+    var previous_cursorX = 0;
+    var previous_cursorY = 0;
 
     document.onmousemove = function(e){
         cursorX = e.pageX;
@@ -11,14 +11,14 @@ module.exports = function() {
     };
 
     function update_cursor() {
-        old_cursorX = cursorX;
-        old_cursorY = cursorY;
+        previous_cursorX = cursorX;
+        previous_cursorY = cursorY;
     }
 
     function movement() {
         return {
-            x: old_cursorX - cursorX,
-            y: old_cursorY - cursorY
+            x: previous_cursorX - cursorX,
+            y: previous_cursorY - cursorY
         };
     }
 
