@@ -1,12 +1,16 @@
 var particle = require('./particle');
 var mouse = require('./mouse-event')();
 
-var width = 800;
-var height = 800;
+var container = document.getElementById("container");
+var width = container.offsetWidth;
+var height = container.offsetHeight;
+var canvas = document.createElement("CANVAS");
+canvas.setAttribute('width', width);
+canvas.setAttribute('height', height);
+canvas.setAttribute('style', 'position: absolute; background: -webkit-linear-gradient(left, hsla(0, 100%, 40%, 1),hsla(0, 100%, 80%, 1));');
+container.appendChild(canvas);
+var ctx = canvas.getContext("2d");
 var particles = [];
-
-var c = document.getElementById("myCanvas");
-var ctx = c.getContext("2d");
 
 for(var i = 0; i < 500; i++) {
     particles.push(particle(width, height));
