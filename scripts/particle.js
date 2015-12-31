@@ -31,6 +31,12 @@ module.exports = function(width, height) {
     function add_mouse_velocity(coords) {
         mouse_vel_x += coords.x / 200;
         mouse_vel_y += coords.y / 200;
+        if (coords.pos_x > pos_x - size/2 && coords.pos_x < pos_x + size/2 && coords.pos_y > pos_y - size/2 && coords.pos_y < pos_y + size/2){
+            var new_vel_x = coords.pos_x - pos_x;
+            var new_vel_y = coords.pos_y - pos_y;
+            mouse_vel_x -= new_vel_x / 20;
+            mouse_vel_y -= new_vel_y / 20;
+        }
     }
 
     function validate_position() {

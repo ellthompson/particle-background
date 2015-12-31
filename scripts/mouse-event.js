@@ -18,7 +18,9 @@ module.exports = function() {
     function movement() {
         return {
             x: previous_cursorX - cursorX,
-            y: previous_cursorY - cursorY
+            y: previous_cursorY - cursorY,
+            pos_x: cursorX,
+            pos_y: cursorY
         };
     }
 
