@@ -2,7 +2,7 @@ module.exports = function(width, height) {
 
     var opacity =  Math.random() / 5,
     opacity_increase = (Math.random() + 0.5) < 1 ? true : false,
-    size = Math.random() * 10 + 20,
+    size = Math.random() * 30 + 10,
     pos_x = (Math.random() * (width + 80)) - 40,
     pos_y = (Math.random() * (height + 80)) - 40,
     vel_x = (Math.random() - 0.5) * 0.5,
@@ -29,8 +29,8 @@ module.exports = function(width, height) {
     }
 
     function add_mouse_velocity(coords) {
-        mouse_vel_x += coords.x / 200;
-        mouse_vel_y += coords.y / 200;
+        mouse_vel_x += coords.x / 200 / 80 * (size * 2);
+        mouse_vel_y += coords.y / 200 / 80 * (size * 2);
         if (coords.pos_x > pos_x - size/2 && coords.pos_x < pos_x + size/2 && coords.pos_y > pos_y - size/2 && coords.pos_y < pos_y + size/2){
             var new_vel_x = coords.pos_x - pos_x;
             var new_vel_y = coords.pos_y - pos_y;

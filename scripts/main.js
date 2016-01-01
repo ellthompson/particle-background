@@ -7,12 +7,12 @@ var height = container.offsetHeight;
 var canvas = document.createElement("CANVAS");
 canvas.setAttribute('width', width);
 canvas.setAttribute('height', height);
-canvas.setAttribute('style', 'position: absolute; background: -webkit-linear-gradient(left, hsla(25, 100%, 40%, 1),hsla(25, 100%, 80%, 1));');
+canvas.setAttribute('style', '-webkit-filter:blur(3px); position: absolute; background: -webkit-linear-gradient(left, hsla(25, 100%, 40%, 1),hsla(25, 100%, 80%, 1));');
 container.appendChild(canvas);
 var ctx = canvas.getContext("2d");
 var particles = [];
 
-for(var i = 0; i < 100; i++) {
+for(var i = 0; i < 600; i++) {
     particles.push(particle(width, height));
 }
 
