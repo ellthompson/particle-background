@@ -31,12 +31,33 @@ module.exports = function(width, height) {
     function add_mouse_velocity(coords) {
         mouse_vel_x += coords.x / 200 / 80 * (size * 2);
         mouse_vel_y += coords.y / 200 / 80 * (size * 2);
-        if (coords.pos_x > pos_x - size/2 && coords.pos_x < pos_x + size/2 && coords.pos_y > pos_y - size/2 && coords.pos_y < pos_y + size/2){
+        if (circle_hit_detection(pos_x, pos_y, coords.x, coords.y, size)) {
             var new_vel_x = coords.pos_x - pos_x;
             var new_vel_y = coords.pos_y - pos_y;
             mouse_vel_x -= new_vel_x / 20;
             mouse_vel_y -= new_vel_y / 20;
         }
+    }
+
+    function circle_hit_detection(center_x, center_y, pos_x, pos_y, size) {
+        var dis_x = center_x - pos_x;
+        var dis_y = center_y - pos_y;
+        var distance = Math.sqrt(dis_x * dis_x + dis_y * dis_y);
+        if (distance < (size / 2))
+            return true;
+        else
+            return false;
+    }
+
+    function square_hit_detection(center_x, center_y, pos_x, pos_y, size) {
+        var min_x = center_x - (size / 2);
+        var max_x = center_x + (size / 2);
+        var min_y = center_y - (size / 2);
+        var max_y = center_y + (size / 2);
+        if (pos_x > min_x && pos_x < max_x && pos_y > min_y && pos_y < max_y)
+            return true;
+        else
+            return false;
     }
 
     function validate_position() {
