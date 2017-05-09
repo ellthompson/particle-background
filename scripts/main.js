@@ -1,5 +1,7 @@
+var CONSTANTS = require('./constants.js');
 var particle = require('./particle');
 var mouse = require('./mouse-event')();
+
 
 var container = document.getElementById("container");
 var width = container.offsetWidth;
@@ -27,4 +29,4 @@ setInterval(function(){
     }
     mouse.update_cursor();
 
-}, 1000/60);
+}, 1000 / CONSTANTS.FRAMES);

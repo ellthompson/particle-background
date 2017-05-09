@@ -1,12 +1,17 @@
+var CONSTANTS = require('./constants.js');
+
 module.exports = function(width, height) {
 
     var opacity =  Math.random() / 5;
     var opacity_increase = (Math.random() + 0.5) < 1 ? true : false;
-    var size = Math.random() * 90 + 30;
-    var pos_x = (Math.random() * (width + 80)) - 40;
-    var pos_y = (Math.random() * (height + 80)) - 40;
-    var vel_x = (Math.random() - 0.5) * 0.5;
-    var vel_y = (Math.random() - 0.5) * 0.5;
+    var minMaxDiameterDifference = CONSTANTS.MAX_PARTICLE_DIAMETER - CONSTANTS.MIN_PARTICLE_DIAMETER;
+    var size = CONSTANTS.MIN_PARTICLE_DIAMETER + (Math.random() * minMaxDiameterDifference);
+    var areaWidth = CONSTANTS.MAX_PARTICLE_DIAMETER * 2 + width;
+    var areaHeight = CONSTANTS.MAX_PARTICLE_DIAMETER * 2 + height;
+    var pos_x = (Math.random() * areaWidth) - CONSTANTS.MAX_PARTICLE_DIAMETER;
+    var pos_y = (Math.random() * areaHeight) - CONSTANTS.MAX_PARTICLE_DIAMETER;
+    var vel_x = (Math.random() - 0.5) * CONSTANTS.BASE_VELOCITY;
+    var vel_y = (Math.random() - 0.5) * CONSTANTS.BASE_VELOCITY;
     var mouse_vel_x = 0;
     var mouse_vel_y = 0;
 
@@ -21,16 +26,16 @@ module.exports = function(width, height) {
     function update_position() {
         var new_pos_x = pos_x + vel_x + mouse_vel_x;
         var new_pos_y = pos_y + vel_y + mouse_vel_y;
-        mouse_vel_x *= 0.95;
-        mouse_vel_y *= 0.95;
+        mouse_vel_x *= CONSTANTS.PARTICLE_DECELERATION;
+        mouse_vel_y *= CONSTANTS.PARTICLE_DECELERATION;
         pos_x = new_pos_x;
         pos_y = new_pos_y;
         validate_position();
     }
 
     function add_mouse_velocity(coords) {
-        mouse_vel_x += coords.x / 200 / 80 * (size * 2);
-        mouse_vel_y += coords.y / 200 / 80 * (size * 2);
+        mouse_vel_x += coords.x / 400 / 80 * (size * 2);
+        mouse_vel_y += coords.y / 400 / 80 * (size * 2);
         if (circle_hit_detection(pos_x, pos_y, coords.x, coords.y, size)) {
             var new_vel_x = coords.pos_x - pos_x;
             var new_vel_y = coords.pos_y - pos_y;
@@ -61,14 +66,14 @@ module.exports = function(width, height) {
     }
 
     function validate_position() {
-        if (pos_x < -90)
-            pos_x = width + 90;
-        else if (pos_x > (width + 90))
-            pos_x = -90;
-        else if (pos_y < -90)
-            pos_y = height + 90;
-        else if (pos_y > (height + 90))
-            pos_t = -90;
+        if (pos_x < - CONSTANTS.MAX_PARTICLE_DIAMETER)
+            pos_x = width + CONSTANTS.MAX_PARTICLE_DIAMETER;
+        else if (pos_x > (width + CONSTANTS.MAX_PARTICLE_DIAMETER))
+            pos_x = - CONSTANTS.MAX_PARTICLE_DIAMETER;
+        else if (pos_y < - CONSTANTS.MAX_PARTICLE_DIAMETER)
+            pos_y = height + CONSTANTS.MAX_PARTICLE_DIAMETER;
+        else if (pos_y > (height + CONSTANTS.MAX_PARTICLE_DIAMETER))
+            pos_t = - CONSTANTS.MAX_PARTICLE_DIAMETER;
     }
 
     function draw(ctx) {
