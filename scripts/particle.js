@@ -1,14 +1,14 @@
 module.exports = function(width, height) {
 
-    var opacity =  Math.random() / 5,
-    opacity_increase = (Math.random() + 0.5) < 1 ? true : false,
-    size = Math.random() * 30 + 10,
-    pos_x = (Math.random() * (width + 80)) - 40,
-    pos_y = (Math.random() * (height + 80)) - 40,
-    vel_x = (Math.random() - 0.5) * 0.5,
-    vel_y = (Math.random() - 0.5) * 0.5,
-    mouse_vel_x = 0,
-    mouse_vel_y = 0;
+    var opacity =  Math.random() / 5;
+    var opacity_increase = (Math.random() + 0.5) < 1 ? true : false;
+    var size = Math.random() * 90 + 30;
+    var pos_x = (Math.random() * (width + 80)) - 40;
+    var pos_y = (Math.random() * (height + 80)) - 40;
+    var vel_x = (Math.random() - 0.5) * 0.5;
+    var vel_y = (Math.random() - 0.5) * 0.5;
+    var mouse_vel_x = 0;
+    var mouse_vel_y = 0;
 
     function update_opacity() {
         opacity = opacity_increase ? opacity + 0.0005 : opacity - 0.0005;
@@ -61,14 +61,14 @@ module.exports = function(width, height) {
     }
 
     function validate_position() {
-        if (pos_x < -40)
-            pos_x = width + 40;
-        else if (pos_x > (width + 40))
-            pos_x = -40;
-        else if (pos_y < -40)
-            pos_y = height + 40;
-        else if (pos_y > (height + 40))
-            pos_t = -40;
+        if (pos_x < -90)
+            pos_x = width + 90;
+        else if (pos_x > (width + 90))
+            pos_x = -90;
+        else if (pos_y < -90)
+            pos_y = height + 90;
+        else if (pos_y > (height + 90))
+            pos_t = -90;
     }
 
     function draw(ctx) {
