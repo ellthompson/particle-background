@@ -1,13 +1,13 @@
-var CONSTANTS = require('./constants.js');
-
-module.exports = function(width, height) {
+module.exports = function(config, width, height) {
+    this.width = width;
+    this.height = height;
 
     var opacity =  Math.random() / 5;
     var opacity_increase = (Math.random() + 0.5) < 1 ? true : false;
     var minMaxDiameterDifference = CONSTANTS.MAX_PARTICLE_DIAMETER - CONSTANTS.MIN_PARTICLE_DIAMETER;
     var size = CONSTANTS.MIN_PARTICLE_DIAMETER + (Math.random() * minMaxDiameterDifference);
-    var areaWidth = CONSTANTS.MAX_PARTICLE_DIAMETER * 2 + width;
-    var areaHeight = CONSTANTS.MAX_PARTICLE_DIAMETER * 2 + height;
+    var areaWidth = CONSTANTS.MAX_PARTICLE_DIAMETER * 2 + this.width;
+    var areaHeight = CONSTANTS.MAX_PARTICLE_DIAMETER * 2 + this.height;
     var pos_x = (Math.random() * areaWidth) - CONSTANTS.MAX_PARTICLE_DIAMETER;
     var pos_y = (Math.random() * areaHeight) - CONSTANTS.MAX_PARTICLE_DIAMETER;
     var vel_x = (Math.random() - 0.5) * CONSTANTS.BASE_VELOCITY;
@@ -67,12 +67,12 @@ module.exports = function(width, height) {
 
     function validate_position() {
         if (pos_x < - CONSTANTS.MAX_PARTICLE_DIAMETER)
-            pos_x = width + CONSTANTS.MAX_PARTICLE_DIAMETER;
-        else if (pos_x > (width + CONSTANTS.MAX_PARTICLE_DIAMETER))
+            pos_x = this.width + CONSTANTS.MAX_PARTICLE_DIAMETER;
+        else if (pos_x > (this.width + CONSTANTS.MAX_PARTICLE_DIAMETER))
             pos_x = - CONSTANTS.MAX_PARTICLE_DIAMETER;
         else if (pos_y < - CONSTANTS.MAX_PARTICLE_DIAMETER)
-            pos_y = height + CONSTANTS.MAX_PARTICLE_DIAMETER;
-        else if (pos_y > (height + CONSTANTS.MAX_PARTICLE_DIAMETER))
+            pos_y = this.height + CONSTANTS.MAX_PARTICLE_DIAMETER;
+        else if (pos_y > (this.height + CONSTANTS.MAX_PARTICLE_DIAMETER))
             pos_t = - CONSTANTS.MAX_PARTICLE_DIAMETER;
     }
 
