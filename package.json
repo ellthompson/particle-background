@@ -1,6 +1,6 @@
 {
   "name": "particle-background",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "React based particle system background",
   "main": "dist/bundle.js",
   "scripts": {
