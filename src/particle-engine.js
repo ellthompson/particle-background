@@ -1,6 +1,6 @@
-import CONSTANTS from './constants.js';
-import mouse from './mouse-event.js';
-import Particle from './particle.js';
+import CONSTANTS from 'constants.js';
+import mouse from 'mouse-event.js';
+import Particle from 'particle.js';
 
 function particleEngine(canvas, config) {
 
@@ -33,9 +33,9 @@ function particleEngine(canvas, config) {
     }
 
     const particles = generateParticles();
-    setInterval(function(){
+    return setInterval(function(){
         render(particles);
     }, 1000 / config.frames);
 };
 
-export default particleEngine;
+module.exports = particleEngine;

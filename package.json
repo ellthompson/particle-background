@@ -1,8 +1,8 @@
 {
   "name": "particle-background",
-  "version": "1.0.2",
+  "version": "1.0.7",
   "description": "React based particle system background",
-  "main": "dist/react/bundle.js",
+  "main": "dist/bundle.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "./node_modules/.bin/gulp && node app.js",

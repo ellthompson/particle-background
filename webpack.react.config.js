@@ -6,9 +6,6 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist/react')
   },
-  {
-    devtool: "eval-source-map"
-  },
   module: {
     rules: [
       {
