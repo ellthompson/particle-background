@@ -3,6 +3,6 @@ module.exports = {
     minParticleDiameter: 30,
     maxParticleDiameter: 100,
     particleDeceleration: 0.92,
-    frames: 60,
+    frames: 30,
     baseVelocity: 0.8,
 };

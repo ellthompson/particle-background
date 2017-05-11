@@ -1,17 +1,18 @@
-module.exports = function(config, width, height) {
+function Particle(config, width, height) {
+    this.config = config;
     this.width = width;
     this.height = height;
 
     var opacity =  Math.random() / 5;
     var opacity_increase = (Math.random() + 0.5) < 1 ? true : false;
-    var minMaxDiameterDifference = CONSTANTS.MAX_PARTICLE_DIAMETER - CONSTANTS.MIN_PARTICLE_DIAMETER;
-    var size = CONSTANTS.MIN_PARTICLE_DIAMETER + (Math.random() * minMaxDiameterDifference);
-    var areaWidth = CONSTANTS.MAX_PARTICLE_DIAMETER * 2 + this.width;
-    var areaHeight = CONSTANTS.MAX_PARTICLE_DIAMETER * 2 + this.height;
-    var pos_x = (Math.random() * areaWidth) - CONSTANTS.MAX_PARTICLE_DIAMETER;
-    var pos_y = (Math.random() * areaHeight) - CONSTANTS.MAX_PARTICLE_DIAMETER;
-    var vel_x = (Math.random() - 0.5) * CONSTANTS.BASE_VELOCITY;
-    var vel_y = (Math.random() - 0.5) * CONSTANTS.BASE_VELOCITY;
+    var minMaxDiameterDifference = this.config.maxParticleDiameter - this.config.minParticleDiameter;
+    var size = this.config.minParticleDiameter + (Math.random() * minMaxDiameterDifference);
+    var areaWidth = this.config.maxParticleDiameter * 2 + this.width;
+    var areaHeight = this.config.maxParticleDiameter * 2 + this.height;
+    var pos_x = (Math.random() * areaWidth) - this.config.maxParticleDiameter;
+    var pos_y = (Math.random() * areaHeight) - this.config.maxParticleDiameter;
+    var vel_x = (Math.random() - 0.5) * this.config.baseVelocity;
+    var vel_y = (Math.random() - 0.5) * this.config.baseVelocity;
     var mouse_vel_x = 0;
     var mouse_vel_y = 0;
 
@@ -23,11 +24,11 @@ module.exports = function(config, width, height) {
             opacity_increase = false;
     }
 
-    function update_position() {
+    const update_position = () => {
         var new_pos_x = pos_x + vel_x + mouse_vel_x;
         var new_pos_y = pos_y + vel_y + mouse_vel_y;
-        mouse_vel_x *= CONSTANTS.PARTICLE_DECELERATION;
-        mouse_vel_y *= CONSTANTS.PARTICLE_DECELERATION;
+        mouse_vel_x *= this.config.particleDeceleration;
+        mouse_vel_y *= this.config.particleDeceleration;
         pos_x = new_pos_x;
         pos_y = new_pos_y;
         validate_position();
@@ -65,15 +66,15 @@ module.exports = function(config, width, height) {
             return false;
     }
 
-    function validate_position() {
-        if (pos_x < - CONSTANTS.MAX_PARTICLE_DIAMETER)
-            pos_x = this.width + CONSTANTS.MAX_PARTICLE_DIAMETER;
-        else if (pos_x > (this.width + CONSTANTS.MAX_PARTICLE_DIAMETER))
-            pos_x = - CONSTANTS.MAX_PARTICLE_DIAMETER;
-        else if (pos_y < - CONSTANTS.MAX_PARTICLE_DIAMETER)
-            pos_y = this.height + CONSTANTS.MAX_PARTICLE_DIAMETER;
-        else if (pos_y > (this.height + CONSTANTS.MAX_PARTICLE_DIAMETER))
-            pos_t = - CONSTANTS.MAX_PARTICLE_DIAMETER;
+    const validate_position = () => {
+        if (pos_x < - this.config.maxParticleDiameter)
+            pos_x = this.width + this.config.maxParticleDiameter;
+        else if (pos_x > (this.width + this.config.maxParticleDiameter))
+            pos_x = - this.config.maxParticleDiameter;
+        else if (pos_y < - this.config.maxParticleDiameter)
+            pos_y = this.height + this.config.maxParticleDiameter;
+        else if (pos_y > (this.height + this.config.maxParticleDiameter))
+            pos_y = - this.config.maxParticleDiameter;
     }
 
     function draw(ctx) {
@@ -94,3 +95,5 @@ module.exports = function(config, width, height) {
         draw: draw
     };
 };
+
+export default Particle;
