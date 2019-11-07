@@ -1,4 +1,4 @@
-# HTML5 Canvas Paricle Background
+# HTML5 Canvas Particle Background
 
 ![](media/giphy.gif)
 
