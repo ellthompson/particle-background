@@ -15,6 +15,8 @@ Creates a floating particle effect background which responds to mouse movement.
 
 Configuration can be applied to the particle background to change the way it renders.
 To apply configuration, edit the second argument of the particleEngine function within `./src/index.js`.
+
 Example:
 `particleEngine(canvas, { frames: 60 });`
-All modifiable values can be viewed in [constants](src/constants.js)
+
+All modifiable values can be viewed in [constants](src/constants.js).
